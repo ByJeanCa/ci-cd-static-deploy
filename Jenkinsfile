@@ -11,6 +11,10 @@ pipeline {
                 git url: 'https://github.com/ByJeanCa/ci-cd-static-deploy.git', credentialsId: 'git-token', branch: 'main'
             }
         }
+        stage("DEBUG CHECK CLONE REPO ") {
+            sh 'ls'
+        }
+
         stage("Checking the required files") {
             steps {
                 sh 'chmod +x scripts/validate_files.sh'
@@ -20,7 +24,7 @@ pipeline {
         stage("Build and run static-web container") {
             steps {
                 sh """
-                docker build -t static-web
+                docker build -t static-web .
                 docker run -d -p 8081:80 static-web
                 """
             }
