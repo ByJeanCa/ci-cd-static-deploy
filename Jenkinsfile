@@ -28,6 +28,7 @@ pipeline {
         stage("Test static-web container") {
             steps {
                 sh 'curl https://localhost:8081'
+            }
         }
     }
 }
