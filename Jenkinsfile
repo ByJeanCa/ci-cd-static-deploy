@@ -27,7 +27,7 @@ pipeline {
             steps {
                 sh """
                 docker build -t static-web .
-                docker run -d -p 8081:80 static-web
+                docker run -d -p 8081:80 -n ansible-net static-web 
                 """
             }
         }
