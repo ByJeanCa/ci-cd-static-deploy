@@ -27,7 +27,7 @@ pipeline {
             steps {
                 sh """
                 docker build -t static-web .
-                docker run -d -p 8081:80 --network ansible-net static-web 
+                docker run -d -p 8081:80 --network jenkins-net static-web 
                 """
             }
         }
