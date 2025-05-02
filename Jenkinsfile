@@ -27,13 +27,13 @@ pipeline {
             steps {
                 sh """
                 docker build -t static-web .
-                docker run -d -p 8081:80 --network jenkins-net static-web 
+                docker run -d --name static-web -p 8081:80 --network jenkins-net static-web 
                 """
             }
         }
         stage("Test static-web container") {
             steps {
-                sh 'curl http://localhost:8081'
+                sh 'curl http://static-web:80'
             }
         }
     }
