@@ -34,6 +34,8 @@ pipeline {
         stage("Test static-web container") {
             steps {
                 sh 'curl http://static-web:80'
+                sh 'docker stop static-web'
+                sh 'docker rm static-web'
             }
         }
     }
