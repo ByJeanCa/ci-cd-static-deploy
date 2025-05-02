@@ -25,5 +25,10 @@ pipeline {
                 """
             }
         }
+        stage("HOLAAA") {
+            steps {
+                echo 'Hola
+            }
+        }
     }
 }
