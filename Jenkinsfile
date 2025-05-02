@@ -12,7 +12,9 @@ pipeline {
             }
         }
         stage("DEBUG CHECK CLONE REPO ") {
-            sh 'ls'
+            steps {
+                sh 'ls'
+            }
         }
 
         stage("Checking the required files") {
