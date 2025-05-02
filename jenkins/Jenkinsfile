@@ -17,9 +17,12 @@ pipeline {
                 sh 'scripts/validate_files.sh'
             }
         }
-        stage("Saludo") {
+        stage("Build static-web container") {
             steps {
-                echo 'hola'
+                sh """
+                docker build -t static-web
+                docker run -d -p 8081:80 static-web
+                """
             }
         }
     }
