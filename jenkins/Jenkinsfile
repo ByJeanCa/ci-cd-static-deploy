@@ -17,5 +17,10 @@ pipeline {
                 sh 'scripts/validate_files.sh'
             }
         }
+        stage("Saludo") {
+            steps {
+                echo 'hola'
+            }
+        }
     }
 }
