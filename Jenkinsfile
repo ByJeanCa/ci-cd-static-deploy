@@ -33,7 +33,8 @@ pipeline {
         }
         stage("Test static-web container") {
             steps {
-                sh 'curl https://localhost:8081'
+                sh 'curl http://localhost:8081
+'
             }
         }
     }
