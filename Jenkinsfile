@@ -30,7 +30,7 @@ pipeline {
             steps {
                 sh """
                     docker build -t static-web .
-                    docker run -d --name static-web -p 8082:80 --network jenkins-net static-web 
+                    docker run -d --name static-web -p 8083:80 --network jenkins-net static-web 
                 """
             }
         }
