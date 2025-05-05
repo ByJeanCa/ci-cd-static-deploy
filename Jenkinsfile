@@ -56,6 +56,7 @@ pipeline {
                     string(credentialsId: 'ansible-vault-pass', variable: 'VAULT_PASS')
                     ]) {
                         sh """
+                        export USER=root
                         export HOME=/tmp
                         mkdir -p ~/.ssh
 
