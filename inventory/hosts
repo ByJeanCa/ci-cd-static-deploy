@@ -1,0 +1,4 @@
+[blue]
+server1 ansible_host=localhost ansible_user=ansible_user ansible_port=2222 ansible_ssh_private_key_file=~/.ssh/static_web ansible_python_interpreter=/usr/bin/python3.8 web_host=ansible-target-1 web_port=80
+[green]
+server2 ansible_host=localhost ansible_user=ansible_user ansible_port=2223 ansible_ssh_private_key_file=~/.ssh/static_web ansible_python_interpreter=/usr/bin/python3.8 web_host=ansible-target-2 web_port=80
