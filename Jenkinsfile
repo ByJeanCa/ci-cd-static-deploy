@@ -52,6 +52,7 @@ pipeline {
                     file(credentialsId: 'ansible-ssh-key', variable: 'SSH_PRIVATE_KEY'),
                     string(credentialsId: 'ansible-vault-pass', variable: 'VAULT_PASS')
                     ]) {
+                        checkout scm
                         sh """
                         mkdir -p ~/.ssh
 
