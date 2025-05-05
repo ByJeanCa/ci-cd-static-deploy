@@ -5,11 +5,6 @@ pipeline {
         PLAYBOOK = 'static-web-deploy.yml'
     }
     stages {
-        stage("Clean work space") {
-            steps {
-                sh 'rm -rf $WORKSPACE/*'
-            }
-        }
         stage("Checkout") {
             steps {
                 checkout scm
