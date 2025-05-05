@@ -7,7 +7,7 @@
   ansible.builtin.archive:
     path: "{{ local_path }}/*"
     dest: "{{ local_path }}/static.zip"
-    format: .zip
+    format: zip
   register: compress_result
   delegate_to: localhost
 
