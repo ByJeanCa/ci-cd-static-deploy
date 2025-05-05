@@ -15,12 +15,11 @@ pipeline {
                 checkout scm
             }
         }
-        stage("DEBUG CHECK CLONE REPO ") {
+        stage("DEBUG CHECK CLONE REPO") {
             steps {
                 sh 'ls'
             }
         }
-
         stage("Checking the required files") {
             steps {
                 sh 'chmod +x scripts/validate_files.sh'
@@ -30,8 +29,8 @@ pipeline {
         stage("Build and run static-web container") {
             steps {
                 sh """
-                docker build -t static-web .
-                docker run -d --name static-web -p 8081:80 --network jenkins-net static-web 
+                    docker build -t static-web .
+                    docker run -d --name static-web -p 8081:80 --network jenkins-net static-web 
                 """
             }
         }
@@ -47,8 +46,10 @@ pipeline {
                 branch 'main'
             }
             steps {
-                sh 'ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --ask-become-pass --limit blue'
-                sh 'ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --ask-become-pass --limit green'
+                withCredentials([string(variable: 'VAULT_PASS', credentialsId: 'ansible-vault-pass')]) {
+                    sh 'ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=<(echo $VAULT_PASS) --limit blue'
+                    sh 'ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=<(echo $VAULT_PASS) --limit green'
+                }
             }
         }
     }
