@@ -15,6 +15,11 @@
 - name: debug
   ansible.builtin.shell: ls "{{ local_path }}"
   delegate_to: localhost
+  register: result
+
+- name: debug
+  debug:
+    var: result
 
 - name: Compressing static-files
   ansible.builtin.archive:
