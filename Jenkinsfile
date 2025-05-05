@@ -63,6 +63,8 @@ pipeline {
                         chmod 600 ~/.ssh/id_rsa
                         ls ~/.ssh/
                         cat /home/ansible_user/.ssh/authorized_keys
+                        whoami && id
+
 
 
                         echo "$VAULT_PASS" > vault_pass.txt
