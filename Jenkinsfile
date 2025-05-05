@@ -44,7 +44,7 @@ pipeline {
         stage("Deploy") { 
             agent {
                 docker {
-                    image 'ansible/ansible:latest'
+                    image 'alpine/ansible:latest'
                 }
             }
             when {
