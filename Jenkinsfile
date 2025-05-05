@@ -5,11 +5,6 @@ pipeline {
         PLAYBOOK = 'static-web-deploy.yml'
     }
     stages {
-        stage("Clean work space") {
-            steps {
-                sh 'rm -rf $WORKSPACE/*'
-            }
-        }
         stage("Checkout") {
             steps {
                 checkout scm
@@ -45,7 +40,7 @@ pipeline {
             agent {
                 docker {
                     image 'willhallonline/ansible:latest'
-                    args '-u 0 --network jenkins-net'
+                    args '-u 0 --network jenkins-net -v $WORKSPACE:/workspace'
 
                 }
             }
@@ -62,8 +57,8 @@ pipeline {
 
                         cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
                         chmod 600 ~/.ssh/id_rsa
-                        ls ~/.ssh/
-                        whoami && id
+
+                        ls static-files
 
                         echo "$VAULT_PASS" > vault_pass.txt
                         ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=vault_pass.txt --limit blue
