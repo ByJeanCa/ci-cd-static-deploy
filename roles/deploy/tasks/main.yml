@@ -10,6 +10,10 @@
     format: zip
   register: compress_result
   delegate_to: localhost
+  
+- name: Verificar ruta en el contenedor ansible
+  command: ls -la "{{ local_path }}"
+  delegate_to: localhost
 
 - name: Checking if the file compression has been performed correctly
   debug:
