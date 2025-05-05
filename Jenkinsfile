@@ -1,14 +1,18 @@
 pipeline {
     agent any
+    environment {
+        INVENTORY = 'inventory/hosts'
+        PLAYBOOK = 'static-web-deploy.yml'
+    }
     stages {
         stage("Clean work space") {
             steps {
                 sh 'rm -rf $WORKSPACE/*'
             }
         }
-        stage("Clone repo") {
+        stage("Checkout") {
             steps {
-                git url: 'https://github.com/ByJeanCa/ci-cd-static-deploy.git', credentialsId: 'git-token', branch: 'main'
+                checkout scm
             }
         }
         stage("DEBUG CHECK CLONE REPO ") {
@@ -36,6 +40,15 @@ pipeline {
                 sh 'curl http://static-web:80'
                 sh 'docker stop static-web'
                 sh 'docker rm static-web'
+            }
+        }
+        stage("Deploy") { 
+            when {
+                branch 'main'
+            }
+            steps {
+                sh 'ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --ask-become-pass --limit blue'
+                sh 'ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --ask-become-pass --limit green'
             }
         }
     }
