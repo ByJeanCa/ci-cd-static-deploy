@@ -44,7 +44,7 @@ pipeline {
         stage("Deploy") { 
             agent {
                 docker {
-                    image 'alpine/ansible:latest'
+                    image 'willhallonline/ansible:latest'
                 }
             }
             when {
@@ -53,6 +53,7 @@ pipeline {
             steps {
                 withCredentials([string(variable: 'VAULT_PASS', credentialsId: 'ansible-vault-pass')]) {
                     sh """
+                    export HOME=/tmp
                     echo "$VAULT_PASS" > vault_pass.txt
                     ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=vault_pass.txt --limit blue
                     ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=vault_pass.txt --limit green
