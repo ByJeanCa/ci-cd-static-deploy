@@ -44,7 +44,9 @@ pipeline {
         stage("Deploy") { 
             agent {
                 docker {
-                    image 'willhallonline/ansible:latest'
+                    image 'willhallonline/ansible:latest',
+                    args '-u 0'
+
                 }
             }
             when {
@@ -52,12 +54,10 @@ pipeline {
             }
             steps {
                 withCredentials([
-                    file(credentialsId: 'ansible-ssh-key', variable: 'SSH_PRIVATE_KEY'),
+                    file(credentialsId: 'ansible-ssh-key', variable: 'SSH_PRIVATE_KEY')
                     string(credentialsId: 'ansible-vault-pass', variable: 'VAULT_PASS')
                     ]) {
                         sh """
-                        export USER=root
-                        export HOME=/tmp
                         mkdir -p ~/.ssh
 
                         cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
