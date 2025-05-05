@@ -16,6 +16,11 @@
     msg: Properly compressed files
   failed_when: compress_result.changed == false
 
+- name: ensure remote_path production server exits
+  ansible.builtin.file:
+    path: "{{ remote_temp_path }}"
+    state: directory
+
 - name: Copying static zip to production server
   ansible.builtin.copy:
     src:  "{{ local_path }}/static.zip"
