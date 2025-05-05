@@ -45,7 +45,7 @@ pipeline {
             agent {
                 docker {
                     image 'willhallonline/ansible:latest'
-                    args '-u 0'
+                    args '-u 0 --network jenkins-net'
 
                 }
             }
