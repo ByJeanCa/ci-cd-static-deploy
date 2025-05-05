@@ -1,4 +1,4 @@
 [blue]
-server1 ansible_host=172.18.0.3 ansible_user=ansible_user ansible_port=22  ansible_python_interpreter=/usr/bin/python3.8 web_host=ansible-target-1 web_port=80
+server1 ansible_host=172.18.0.3 ansible_user=ansible_user ansible_port=22  ansible_python_interpreter=/usr/bin/python3.8 web_host=ansible-target-1 web_port=80 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 [green]
-server2 ansible_host=172.18.0.4 ansible_user=ansible_user ansible_port=22  ansible_python_interpreter=/usr/bin/python3.8 web_host=ansible-target-2 web_port=80
+server2 ansible_host=172.18.0.4 ansible_user=ansible_user ansible_port=22  ansible_python_interpreter=/usr/bin/python3.8 web_host=ansible-target-2 web_port=80 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
