@@ -2,6 +2,11 @@
 - name: debug
   ansible.builtin.shell: ls "{{ local_path }}"
   delegate_to: localhost
+  register: result
+
+- name: debug
+  debug:
+    var: result
 
 - name: Deleting previous .zip files
   ansible.builtin.shell: rm -rf "{{ local_path }}/*.zip" || true
