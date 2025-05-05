@@ -44,7 +44,7 @@ pipeline {
         stage("Deploy") { 
             agent {
                 docker {
-                    image 'willhallonline/ansible:latest',
+                    image 'willhallonline/ansible:latest'
                     args '-u 0'
 
                 }
