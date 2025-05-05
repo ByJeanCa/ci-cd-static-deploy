@@ -1,7 +1,13 @@
 ---
+- name: debug
+  ansible.builtin.shell: ls "{{ local_path }}"
+  
 - name: Deleting previous .zip files
   ansible.builtin.shell: rm -rf "{{ local_path }}/*.zip" || true
   delegate_to: localhost
+
+- name: debug
+  ansible.builtin.shell: ls "{{ local_path }}"
 
 - name: Compressing static-files
   ansible.builtin.archive:
@@ -10,7 +16,7 @@
     format: zip
   register: compress_result
   delegate_to: localhost
-  
+
 - name: Verificar ruta en el contenedor ansible
   command: ls -la "{{ local_path }}"
   delegate_to: localhost
