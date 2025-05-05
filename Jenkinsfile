@@ -62,10 +62,7 @@ pipeline {
                         cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
                         chmod 600 ~/.ssh/id_rsa
                         ls ~/.ssh/
-                        cat /home/ansible_user/.ssh/authorized_keys
                         whoami && id
-
-
 
                         echo "$VAULT_PASS" > vault_pass.txt
                         ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=vault_pass.txt --limit blue
