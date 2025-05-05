@@ -47,8 +47,12 @@ pipeline {
             }
             steps {
                 withCredentials([string(variable: 'VAULT_PASS', credentialsId: 'ansible-vault-pass')]) {
-                    sh 'ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=<(echo $VAULT_PASS) --limit blue'
-                    sh 'ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=<(echo $VAULT_PASS) --limit green'
+                    sh """
+                    echo "$VAULT_PASS" > vault_pass.txt
+                    ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=vault_pass.txt --limit blue
+                    ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=vault_pass.txt --limit green
+                    rm -rf vault_pass.txt
+
                 }
             }
         }
