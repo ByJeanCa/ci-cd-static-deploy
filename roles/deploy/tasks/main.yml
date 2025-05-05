@@ -1,0 +1,57 @@
+---
+- name: Deleting previous .zip files
+  ansible.builtin.shell: rm -rf "{{ local_path }}/*.zip" || true
+  delegate_to: localhost
+
+- name: Compressing static-files
+  ansible.builtin.archive:
+    path: "{{ local_path }}/*"
+    dest: "{{ local_path }}/static.zip"
+    format: .zip
+  register: compress_result
+  delegate_to: localhost
+
+- name: Checking if the file compression has been performed correctly
+  debug:
+    msg: Properly compressed files
+  failed_when: compress_result.changed == false
+
+- name: Copying static zip to production server
+  ansible.builtin.copy:
+    src:  "{{ local_path }}/static.zip"
+    dest: "{{ remote_temp_path }}/static.zip"
+
+- name: unzip files
+  ansible.builtin.unarchive: 
+    src: "{{ remote_temp_path }}/static.zip"
+    dest: "{{ remote_temp_path }}"
+    remote_src: yes
+
+- name: Delete zip file
+  ansible.builtin.file:
+    path: "{{ remote_temp_path }}/static.zip"
+    state: absent
+
+- name: Moving static files to nginx
+  ansible.builtin.command: "mv {{ remote_temp_path }}/* {{ remote_path }}/"
+  notify: Restart nginx
+
+- name: Deleting static files from remote path
+  ansible.builtin.shell: rm -rf "{{ remote_temp_path }}/*" 
+
+- name: Ensure nginx is running
+  ansible.builtin.service:
+    name: nginx
+    state: running
+
+- name: Check site
+  ansible.builtin.uri:
+    url: "http://{{ web_host }}:{{ web_port }}"
+    return_content: yes
+  register: result
+  failed_when: result.status != 200
+
+
+
+
+

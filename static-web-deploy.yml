@@ -1,0 +1,6 @@
+---
+- name: Static web deployment
+  hosts: blue green
+  become: true
+  roles:
+    - deploy
