@@ -1,4 +1,4 @@
 remote_path: /var/www/html
-local_path: /workspace/static-files
+local_path: static-files
 remote_temp_path: /home/temp
 
