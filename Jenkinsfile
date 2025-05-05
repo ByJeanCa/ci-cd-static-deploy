@@ -42,6 +42,11 @@ pipeline {
             }
         }
         stage("Deploy") { 
+            agent {
+                docker {
+                    image 'ansible/ansible:latest'
+                }
+            }
             when {
                 branch 'main'
             }
