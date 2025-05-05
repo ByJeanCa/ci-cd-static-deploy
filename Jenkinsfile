@@ -52,6 +52,7 @@ pipeline {
                     ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=vault_pass.txt --limit blue
                     ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=vault_pass.txt --limit green
                     rm -rf vault_pass.txt
+                    """
 
                 }
             }
