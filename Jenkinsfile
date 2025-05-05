@@ -52,14 +52,13 @@ pipeline {
                     file(credentialsId: 'ansible-ssh-key', variable: 'SSH_PRIVATE_KEY'),
                     string(credentialsId: 'ansible-vault-pass', variable: 'VAULT_PASS')
                     ]) {
-                        checkout scm
                         sh """
                         mkdir -p ~/.ssh
 
                         cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
                         chmod 600 ~/.ssh/id_rsa
 
-                        sh "ls -la /workspace/static-files"
+                        sh "pwd"
 
                         echo "$VAULT_PASS" > vault_pass.txt
                         ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=vault_pass.txt --limit blue
