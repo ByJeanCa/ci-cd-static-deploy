@@ -10,11 +10,6 @@ pipeline {
                 checkout scm
             }
         }
-        stage("DEBUG CHECK CLONE REPO") {
-            steps {
-                sh 'ls'
-            }
-        }
         stage("Checking the required files") {
             steps {
                 sh 'chmod +x scripts/validate_files.sh'
@@ -57,8 +52,6 @@ pipeline {
 
                         cp $SSH_PRIVATE_KEY ~/.ssh/id_rsa
                         chmod 600 ~/.ssh/id_rsa
-
-                        pwd
 
                         echo "$VAULT_PASS" > vault_pass.txt
                         ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=vault_pass.txt --limit blue
