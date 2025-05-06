@@ -45,6 +45,7 @@
     src: "{{ remote_temp_path }}/"
     dest: "{{ remote_path }}/"
     remote_src: yes
+  notify: Restart nginx
 
 - name: Deleting remote temp path
   ansible.builtin.file:
@@ -62,6 +63,10 @@
     return_content: yes
   register: result
   failed_when: result.status != 200
+
+- name: Show result
+  debug:
+    msg: "{{ result.content }}"
 
 
 
