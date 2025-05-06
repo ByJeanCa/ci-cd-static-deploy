@@ -54,7 +54,7 @@
 - name: Ensure nginx is running
   ansible.builtin.service:
     name: nginx
-    state: running
+    state: started
 
 - name: Check site
   ansible.builtin.uri:
