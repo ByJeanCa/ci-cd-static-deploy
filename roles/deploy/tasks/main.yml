@@ -1,22 +1,6 @@
----
-- name: debug list files
-  ansible.builtin.shell: ls 
-  register: result
-
-- name: debug
-  debug:
-    var: result
-
-- name: list dir
-  ansible.builtin.command: pwd
-  register: result
-
-- name: debug
-  debug:
-    var: result
-
 - name: Deleting previous .zip files
   ansible.builtin.shell: find "{{ local_path }}" -type f -name "*.zip" -exec rm -f {} \;
+  delegate_to: localhost
 
 - name: Compressing static-files
   ansible.builtin.archive:
