@@ -1,14 +1,14 @@
 ---
 - name: debug list files
-  ansible.builtin.command: ls 
+  ansible.builtin.shell: ls 
   register: result
 
 - name: debug
   debug:
     var: result
 
-- name: list localpath
-  ansible.builtin.command: ls "{{ local_path }}"
+- name: list dir
+  ansible.builtin.command: pwd
   register: result
 
 - name: debug
