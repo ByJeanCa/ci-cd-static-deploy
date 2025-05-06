@@ -1,4 +1,20 @@
 ---
+- name: debug list files
+  ansible.builtin.command: ls 
+  register: ls_result
+
+- name: debug
+  debug:
+    var: ls_result
+
+- name: list localpath
+  ansible.builtin.command: ls "{{ local_path }}"
+  register: ls result
+
+- name: debug
+  debug:
+    var: ls_result
+
 - name: Deleting previous .zip files
   ansible.builtin.shell: find "{{ local_path }}" -type f -name "*.zip" -exec rm -f {} \;
 
