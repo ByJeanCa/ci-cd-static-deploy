@@ -54,8 +54,8 @@ pipeline {
                         chmod 600 ~/.ssh/id_rsa
 
                         echo "$VAULT_PASS" > vault_pass.txt
+                        ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=vault_pass.txt --limit gren
                         ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=vault_pass.txt --limit blue
-                        ansible-playbook -i ${INVENTORY} ${PLAYBOOK} --become --extra-vars "@pass/password.pass" --vault-password-file=vault_pass.txt --limit green
                     
                         rm -rf vault_pass.txt
                         rm -rf ~/.ssh
