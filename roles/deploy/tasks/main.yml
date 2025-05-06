@@ -41,11 +41,15 @@
     state: absent
 
 - name: Moving static files to nginx
-  ansible.builtin.command: "mv {{ remote_temp_path }}/* {{ remote_path }}/"
-  notify: Restart nginx
+  ansible.builtin.copy:
+    src: "{{ remote_temp_path }}/"
+    dest: "{{ remote_path }}/"
+    remote_src: yes
 
-- name: Deleting static files from remote path
-  ansible.builtin.shell: rm -rf "{{ remote_temp_path }}/*" 
+- name: Deleting remote temp path
+  ansible.builtin.file:
+    path: "{{ remote_temp_path }}"
+    state: absent
 
 - name: Ensure nginx is running
   ansible.builtin.service:
